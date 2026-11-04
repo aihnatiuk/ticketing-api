@@ -1,0 +1,31 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Booking/">
+    <Project Path="Modules/Booking/Booking.Application/Booking.Application.csproj" />
+    <Project Path="Modules/Booking/Booking.Domain/Booking.Domain.csproj" Id="7a37714f-8751-4055-af74-df0f4ccb103a" />
+    <Project Path="Modules/Booking/Booking.Infrastructure/Booking.Infrastructure.csproj" />
+    <Project Path="Modules/Booking/Booking.Presentation/Booking.Presentation.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Catalog/">
+    <Project Path="Modules/Catalog/Catalog.Application/Catalog.Application.csproj" />
+    <Project Path="Modules/Catalog/Catalog.Domain/Catalog.Domain.csproj" />
+    <Project Path="Modules/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
+    <Project Path="Modules/Catalog/Catalog.Presentation/Catalog.Presentation.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Identity/">
+    <Project Path="Modules/Identity/Identity.Contracts/Identity.Contracts.csproj" />
+    <Project Path="Modules/Identity/Identity.Module/Identity.Module.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Notification/">
+    <Project Path="Modules/Notification/Notification.Contracts/Notification.Contracts.csproj" />
+    <Project Path="Modules/Notification/Notification.Module/Notification.Module.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Payment/">
+    <Project Path="Modules/Payment/Payment.Contracts/Payment.Contracts.csproj" />
+    <Project Path="Modules/Payment/Payment.Module/Payment.Module.csproj" />
+  </Folder>
+  <Project Path="Ticketing.API/Ticketing.API.csproj" Id="cc9ad97a-6232-4b0c-a66b-78221e9036eb" />
+</Solution>
