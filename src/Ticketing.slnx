@@ -5,7 +5,7 @@
   <Folder Name="/Modules/" />
   <Folder Name="/Modules/Booking/">
     <Project Path="Modules/Booking/Booking.Application/Booking.Application.csproj" />
-    <Project Path="Modules/Booking/Booking.Domain/Booking.Domain.csproj" Id="7a37714f-8751-4055-af74-df0f4ccb103a" />
+    <Project Path="Modules/Booking/Booking.Domain/Booking.Domain.csproj" />
     <Project Path="Modules/Booking/Booking.Infrastructure/Booking.Infrastructure.csproj" />
     <Project Path="Modules/Booking/Booking.Presentation/Booking.Presentation.csproj" />
   </Folder>
