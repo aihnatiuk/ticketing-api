@@ -1,3 +1,4 @@
+using BuildingBlocks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,8 @@ public static class DependencyInjection
                 sql => sql.MigrationsHistoryTable("__EFMigrationsHistory", PaymentDbContext.Schema)
             )
         );
+
+        services.AddMigrationService<PaymentDbContext>();
 
         return services;
     }
