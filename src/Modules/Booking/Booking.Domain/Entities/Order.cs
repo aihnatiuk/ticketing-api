@@ -23,7 +23,7 @@ public sealed class Order : Entity<long>
 
     public decimal TotalPrice { get; set; }
 
-    public Guid? PaymentId { get; set; }
+    public long? PaymentId { get; set; }
 
     public ICollection<OrderItem> OrderItems { get; set; } = [];
 }
