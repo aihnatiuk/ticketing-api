@@ -3,7 +3,7 @@ using Payment.Module.Domain;
 
 namespace Payment.Module.Persistence;
 
-public sealed class PaymentDbContext(DbContextOptions<PaymentDbContext> options)
+internal sealed class PaymentDbContext(DbContextOptions<PaymentDbContext> options)
     : DbContext(options)
 {
     public const string Schema = "payment";

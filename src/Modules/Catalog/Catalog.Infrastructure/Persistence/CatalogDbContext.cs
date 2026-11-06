@@ -1,10 +1,12 @@
+using Catalog.Application.Abstractions;
 using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infrastructure.Persistence;
 
-public sealed class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
-    : DbContext(options)
+internal sealed class CatalogDbContext(DbContextOptions<CatalogDbContext> options)
+    : DbContext(options),
+        ICatalogDbContext
 {
     public const string Schema = "catalog";
 

@@ -14,4 +14,10 @@
       Version="1.23.0"
     />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Payment\Payment.Module\Payment.Module.csproj" />
+    <ProjectReference Include="..\Modules\Catalog\Catalog.Presentation\Catalog.Presentation.csproj" />
+    <ProjectReference Include="..\Modules\Booking\Booking.Presentation\Booking.Presentation.csproj" />
+  </ItemGroup>
 </Project>

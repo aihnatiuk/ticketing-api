@@ -1,10 +1,12 @@
+using Booking.Application.Abstractions;
 using Booking.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Infrastructure.Persistence;
 
-public sealed class BookingDbContext(DbContextOptions<BookingDbContext> options)
-    : DbContext(options)
+internal sealed class BookingDbContext(DbContextOptions<BookingDbContext> options)
+    : DbContext(options),
+        IBookingDbContext
 {
     public const string Schema = "booking";
 
