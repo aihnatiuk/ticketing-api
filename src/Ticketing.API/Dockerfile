@@ -12,16 +12,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Ticketing.API/Ticketing.API.csproj", "Ticketing.API/"]
-RUN dotnet restore "./Ticketing.API/Ticketing.API.csproj"
+# TODO: Expand this to include each project individually after the solution structure is finalized
 COPY . .
+RUN dotnet restore "./Ticketing.API/Ticketing.API.csproj"
 WORKDIR "/src/Ticketing.API"
-RUN dotnet build "./Ticketing.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Ticketing.API.csproj" -c $BUILD_CONFIGURATION
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Ticketing.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Ticketing.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false --no-build
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
