@@ -18,7 +18,7 @@ internal sealed class SectionConfiguration : IEntityTypeConfiguration<Section>
 
         builder
             .HasOne(s => s.Venue)
-            .WithMany()
+            .WithMany(v => v.Sections)
             .HasForeignKey(s => s.VenueId)
             .OnDelete(DeleteBehavior.Cascade);
 

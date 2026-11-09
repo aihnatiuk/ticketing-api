@@ -17,7 +17,7 @@ internal sealed class PricingZoneConfiguration : IEntityTypeConfiguration<Pricin
 
         builder
             .HasOne<Venue>()
-            .WithMany()
+            .WithMany(v => v.PricingZones)
             .HasForeignKey(z => z.VenueId)
             .OnDelete(DeleteBehavior.Cascade);
 
