@@ -3,6 +3,7 @@ using BuildingBlocks.Infrastructure.Persistence;
 using Catalog.Application;
 using Catalog.Application.Abstractions;
 using Catalog.Infrastructure.Persistence;
+using Catalog.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,11 +27,11 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        var connectionString =
-            configuration.GetConnectionString("Database")
-            ?? throw new InvalidOperationException(
-                "Connection string 'Database' is not configured."
-            );
+        string? connectionString = configuration.GetConnectionString("Database");
+        if (connectionString is null)
+        {
+            throw new InvalidOperationException("Connection string 'Database' is not configured.");
+        }
 
         services.AddDbContext<CatalogDbContext>(options =>
             options.UseSqlServer(
@@ -42,6 +43,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork<CatalogModule>>(sp =>
             sp.GetRequiredService<CatalogDbContext>()
         );
+
+        services.AddScoped<IVenueRepository, VenueRepository>();
 
         services.AddMigrationService<CatalogDbContext>();
 

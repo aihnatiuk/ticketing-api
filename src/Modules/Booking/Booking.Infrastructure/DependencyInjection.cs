@@ -26,11 +26,11 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        var connectionString =
-            configuration.GetConnectionString("Database")
-            ?? throw new InvalidOperationException(
-                "Connection string 'Database' is not configured."
-            );
+        string? connectionString = configuration.GetConnectionString("Database");
+        if (connectionString is null)
+        {
+            throw new InvalidOperationException("Connection string 'Database' is not configured.");
+        }
 
         services.AddDbContext<BookingDbContext>(options =>
             options.UseSqlServer(

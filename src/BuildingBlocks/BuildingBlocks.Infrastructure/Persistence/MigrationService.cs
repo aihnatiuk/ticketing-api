@@ -22,7 +22,7 @@ internal sealed class MigrationService<TContext>(
         string contextName = typeof(TContext).Name;
         logger.LogInformation("Applying {Context} migrations...", contextName);
 
-        using var scope = serviceProvider.CreateScope();
+        using IServiceScope scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<TContext>();
 
         try

@@ -23,11 +23,11 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        var connectionString =
-            configuration.GetConnectionString("Database")
-            ?? throw new InvalidOperationException(
-                "Connection string 'Database' is not configured."
-            );
+        var connectionString = configuration.GetConnectionString("Database");
+        if (connectionString is null)
+        {
+            throw new InvalidOperationException("Connection string 'Database' is not configured.");
+        }
 
         services.AddDbContext<PaymentDbContext>(options =>
             options.UseSqlServer(
