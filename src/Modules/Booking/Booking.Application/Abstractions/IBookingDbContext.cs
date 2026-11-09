@@ -1,9 +1,10 @@
 using Booking.Domain.Entities;
+using BuildingBlocks.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Application.Abstractions;
 
-public interface IBookingDbContext
+public interface IBookingDbContext : IUnitOfWork<BookingModule>
 {
     DbSet<DedicatedSeat> DedicatedSeats { get; }
 
@@ -12,6 +13,4 @@ public interface IBookingDbContext
     DbSet<Order> Orders { get; }
 
     DbSet<OrderItem> OrderItems { get; }
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -1,4 +1,6 @@
+using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Infrastructure.Persistence;
+using Catalog.Application;
 using Catalog.Application.Abstractions;
 using Catalog.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +39,9 @@ public static class DependencyInjection
             )
         );
         services.AddScoped<ICatalogDbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
+        services.AddScoped<IUnitOfWork<CatalogModule>>(sp =>
+            sp.GetRequiredService<CatalogDbContext>()
+        );
 
         services.AddMigrationService<CatalogDbContext>();
 

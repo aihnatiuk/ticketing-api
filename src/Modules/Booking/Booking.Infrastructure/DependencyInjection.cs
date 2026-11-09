@@ -1,5 +1,7 @@
+using Booking.Application;
 using Booking.Application.Abstractions;
 using Booking.Infrastructure.Persistence;
+using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +39,9 @@ public static class DependencyInjection
             )
         );
         services.AddScoped<IBookingDbContext>(sp => sp.GetRequiredService<BookingDbContext>());
+        services.AddScoped<IUnitOfWork<BookingModule>>(sp =>
+            sp.GetRequiredService<BookingDbContext>()
+        );
 
         services.AddMigrationService<BookingDbContext>();
 

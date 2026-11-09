@@ -1,9 +1,10 @@
+using BuildingBlocks.Application.Abstractions;
 using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Application.Abstractions;
 
-public interface ICatalogDbContext
+public interface ICatalogDbContext : IUnitOfWork<CatalogModule>
 {
     DbSet<Venue> Venues { get; }
 
@@ -20,6 +21,4 @@ public interface ICatalogDbContext
     DbSet<Event> Events { get; }
 
     DbSet<EventPrice> EventPrices { get; }
-
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

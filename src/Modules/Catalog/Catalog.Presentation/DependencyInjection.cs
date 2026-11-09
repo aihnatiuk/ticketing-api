@@ -1,3 +1,4 @@
+using Catalog.Application;
 using Catalog.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        services.AddCatalogApplication();
         services.AddCatalogInfrastructure(configuration);
 
         return services;

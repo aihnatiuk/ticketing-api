@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.14" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.14" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlocks.Application\BuildingBlocks.Application.csproj" />
+  </ItemGroup>
 </Project>
