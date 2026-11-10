@@ -8,7 +8,10 @@ internal sealed class SectionConfiguration : IEntityTypeConfiguration<Section>
 {
     public void Configure(EntityTypeBuilder<Section> builder)
     {
-        builder.ToTable("Sections");
+        builder.ToTable(
+            "Sections",
+            t => t.HasCheckConstraint("CK_Sections_Capacity_NonNegative", "[Capacity] >= 0")
+        );
 
         builder.HasKey(s => s.Id);
         builder.Property(s => s.Id).ValueGeneratedOnAdd();

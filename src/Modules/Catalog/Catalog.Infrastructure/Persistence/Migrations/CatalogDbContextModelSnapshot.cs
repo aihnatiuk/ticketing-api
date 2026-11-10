@@ -185,6 +185,9 @@ namespace Catalog.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<int?>("Capacity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Label")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -206,7 +209,10 @@ namespace Catalog.Infrastructure.Persistence.Migrations
                     b.HasIndex("VenueId", "Label")
                         .IsUnique();
 
-                    b.ToTable("Sections", "catalog");
+                    b.ToTable("Sections", "catalog", t =>
+                        {
+                            t.HasCheckConstraint("CK_Sections_Capacity_NonNegative", "[Capacity] >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Catalog.Domain.Entities.TicketType", b =>
@@ -285,7 +291,7 @@ namespace Catalog.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Catalog.Domain.Entities.PricingZone", b =>
                 {
                     b.HasOne("Catalog.Domain.Entities.Venue", null)
-                        .WithMany()
+                        .WithMany("PricingZones")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -316,13 +322,13 @@ namespace Catalog.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Catalog.Domain.Entities.Section", b =>
                 {
                     b.HasOne("Catalog.Domain.Entities.Venue", "Venue")
-                        .WithMany()
+                        .WithMany("Sections")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Catalog.Domain.Entities.PricingZone", "PricingZone")
-                        .WithMany()
+                        .WithMany("Sections")
                         .HasForeignKey("PricingZoneId", "VenueId")
                         .HasPrincipalKey("Id", "VenueId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -374,6 +380,11 @@ namespace Catalog.Infrastructure.Persistence.Migrations
                     b.Navigation("Prices");
                 });
 
+            modelBuilder.Entity("Catalog.Domain.Entities.PricingZone", b =>
+                {
+                    b.Navigation("Sections");
+                });
+
             modelBuilder.Entity("Catalog.Domain.Entities.Row", b =>
                 {
                     b.Navigation("Seats");
@@ -382,6 +393,13 @@ namespace Catalog.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Catalog.Domain.Entities.Section", b =>
                 {
                     b.Navigation("Rows");
+                });
+
+            modelBuilder.Entity("Catalog.Domain.Entities.Venue", b =>
+                {
+                    b.Navigation("PricingZones");
+
+                    b.Navigation("Sections");
                 });
 #pragma warning restore 612, 618
         }
