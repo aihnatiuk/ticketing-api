@@ -5,5 +5,7 @@ namespace Catalog.Application.Abstractions;
 
 public interface IVenueRepository : IRepository<Venue, long>
 {
+    Task<bool> ExistsAsync(long venueId, CancellationToken cancellationToken = default);
+
     Task<bool> HasEventsAsync(long venueId, CancellationToken cancellationToken = default);
 }

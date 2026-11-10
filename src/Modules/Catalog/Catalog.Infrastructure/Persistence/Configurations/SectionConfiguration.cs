@@ -25,7 +25,7 @@ internal sealed class SectionConfiguration : IEntityTypeConfiguration<Section>
         // Composite FK (PricingZoneId, VenueId) -> PricingZones (Id, VenueId)
         builder
             .HasOne(s => s.PricingZone)
-            .WithMany()
+            .WithMany(z => z.Sections)
             .HasForeignKey(s => new { s.PricingZoneId, s.VenueId })
             .HasPrincipalKey(z => new { z.Id, z.VenueId })
             .OnDelete(DeleteBehavior.Restrict);

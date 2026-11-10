@@ -45,6 +45,7 @@ public static class DependencyInjection
         );
 
         services.AddScoped<IVenueRepository, VenueRepository>();
+        services.AddScoped<IPricingZoneRepository, PricingZoneRepository>();
 
         services.AddMigrationService<CatalogDbContext>();
 
