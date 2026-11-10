@@ -26,4 +26,10 @@ public static class PricingZoneErrors
         "PricingZones.HasEventPrices",
         $"{nameof(PricingZone)} is used by event prices and cannot be deleted."
     );
+
+    public static Error VenueMismatch(long id, long venueId) =>
+        Error.Conflict(
+            "PricingZones.VenueMismatch",
+            $"{nameof(PricingZone)} {id} doesn't belong to the venue {venueId}."
+        );
 }

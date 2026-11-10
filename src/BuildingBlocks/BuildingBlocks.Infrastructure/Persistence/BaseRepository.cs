@@ -15,6 +15,11 @@ public class BaseRepository<TEntity, TId>(DbContext context) : IRepository<TEnti
         CancellationToken cancellationToken = default
     ) => await Entities.FindAsync([id], cancellationToken);
 
+    public async Task<TEntity[]> GetByIdsAsync(
+        IEnumerable<TId> ids,
+        CancellationToken cancellationToken = default
+    ) => await Entities.Where(e => ids.Contains(e.Id)).ToArrayAsync(cancellationToken);
+
     public virtual void Add(TEntity entity) => Entities.Add(entity);
 
     public virtual void Remove(TEntity entity) => Entities.Remove(entity);

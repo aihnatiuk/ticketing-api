@@ -12,4 +12,9 @@ public static class VenueErrors
         "Venues.HasEvents",
         $"{nameof(Venue)} has events and cannot be deleted."
     );
+
+    public static readonly Error LayoutLocked = Error.Conflict(
+        "Venues.LayoutLocked",
+        $"{nameof(Venue)} has events and its layout cannot be changed."
+    );
 }
