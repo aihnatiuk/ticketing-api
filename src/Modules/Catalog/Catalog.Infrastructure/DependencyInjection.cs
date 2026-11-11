@@ -50,6 +50,7 @@ public static class DependencyInjection
         services.AddScoped<IRowRepository, RowRepository>();
         services.AddScoped<ISeatRepository, SeatRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
 
         services.AddMigrationService<CatalogDbContext>();
 
