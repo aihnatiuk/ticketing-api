@@ -211,7 +211,7 @@ namespace Catalog.Infrastructure.Persistence.Migrations
 
                     b.ToTable("Sections", "catalog", t =>
                         {
-                            t.HasCheckConstraint("CK_Sections_Capacity_NonNegative", "[Capacity] >= 0");
+                            t.HasCheckConstraint("CK_Sections_Capacity_MatchesType", "([Type] = 1 AND [Capacity] > 0) OR ([Type] <> 1 AND [Capacity] IS NULL)");
                         });
                 });
 

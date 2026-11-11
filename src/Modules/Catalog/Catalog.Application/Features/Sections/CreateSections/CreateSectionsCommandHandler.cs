@@ -58,15 +58,13 @@ internal sealed class CreateSectionsCommandHandler(
         var createdSections = new List<Section>(command.Sections.Count);
         foreach (CreateSectionInput input in command.Sections)
         {
-            var section = new Section
-            {
-                VenueId = command.VenueId,
-                Label = input.Label,
-                Type = input.Type,
-                Capacity = input.Capacity,
-                PricingZoneId = input.PricingZoneId,
-            };
-
+            Section section = Section.Create(
+                input.Label,
+                input.Type,
+                input.Capacity,
+                command.VenueId,
+                input.PricingZoneId
+            );
             sections.Add(section);
             createdSections.Add(section);
         }

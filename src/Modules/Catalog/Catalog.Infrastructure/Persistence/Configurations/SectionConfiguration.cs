@@ -1,4 +1,5 @@
 using Catalog.Domain.Entities;
+using Catalog.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +11,12 @@ internal sealed class SectionConfiguration : IEntityTypeConfiguration<Section>
     {
         builder.ToTable(
             "Sections",
-            t => t.HasCheckConstraint("CK_Sections_Capacity_NonNegative", "[Capacity] >= 0")
+            t =>
+                t.HasCheckConstraint(
+                    "CK_Sections_Capacity_MatchesType",
+                    $"([Type] = {(short)SectionType.GeneralAdmission} AND [Capacity] > 0) "
+                        + $"OR ([Type] <> {(short)SectionType.GeneralAdmission} AND [Capacity] IS NULL)"
+                )
         );
 
         builder.HasKey(s => s.Id);

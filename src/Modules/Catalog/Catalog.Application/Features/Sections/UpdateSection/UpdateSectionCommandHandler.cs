@@ -61,9 +61,8 @@ internal sealed class UpdateSectionCommandHandler(
         }
 
         section.Label = command.Label;
-        section.Type = command.Type;
-        section.Capacity = command.Capacity;
         section.PricingZoneId = command.PricingZoneId;
+        section.ChangeLayout(command.Type, command.Capacity);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
