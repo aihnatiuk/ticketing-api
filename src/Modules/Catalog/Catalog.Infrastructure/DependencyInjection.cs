@@ -49,6 +49,7 @@ public static class DependencyInjection
         services.AddScoped<ISectionRepository, SectionRepository>();
         services.AddScoped<IRowRepository, RowRepository>();
         services.AddScoped<ISeatRepository, SeatRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
 
         services.AddMigrationService<CatalogDbContext>();
 
