@@ -22,7 +22,7 @@ internal sealed class DeleteEventCommandHandler(
             return EventErrors.NotFound(command.Id);
         }
 
-        if (@event.Status != EventStatus.Created)
+        if (@event.Status != EventStatus.Created && @event.Status != EventStatus.Completed)
         {
             return EventErrors.CannotDelete(@event.Id, @event.Status);
         }
