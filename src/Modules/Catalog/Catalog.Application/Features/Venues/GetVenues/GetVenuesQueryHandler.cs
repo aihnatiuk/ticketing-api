@@ -11,7 +11,7 @@ namespace Catalog.Application.Features.Venues.GetVenues;
 internal sealed class GetVenuesQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetVenuesQuery, PagedResult<VenueDto>>
 {
-    public async Task<Result<PagedResult<VenueDto>>> Handle(
+    public async Task<Result<PagedResult<VenueDto>>> HandleAsync(
         GetVenuesQuery query,
         CancellationToken cancellationToken = default
     )

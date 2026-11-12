@@ -11,7 +11,7 @@ namespace Catalog.Application.Features.PricingZones.GetPricingZones;
 internal sealed class GetPricingZonesQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetPricingZonesQuery, IReadOnlyList<PricingZoneDto>>
 {
-    public async Task<Result<IReadOnlyList<PricingZoneDto>>> Handle(
+    public async Task<Result<IReadOnlyList<PricingZoneDto>>> HandleAsync(
         GetPricingZonesQuery query,
         CancellationToken cancellationToken = default
     )

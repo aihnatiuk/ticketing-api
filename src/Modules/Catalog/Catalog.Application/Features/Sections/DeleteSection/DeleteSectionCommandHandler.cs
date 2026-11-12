@@ -12,7 +12,7 @@ internal sealed class DeleteSectionCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteSectionCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteSectionCommand command,
         CancellationToken cancellationToken = default
     )

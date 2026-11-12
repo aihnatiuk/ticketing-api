@@ -12,7 +12,7 @@ namespace Catalog.Application.Features.Rows.GetRows;
 internal sealed class GetRowsQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetRowsQuery, PagedResult<RowDto>>
 {
-    public async Task<Result<PagedResult<RowDto>>> Handle(
+    public async Task<Result<PagedResult<RowDto>>> HandleAsync(
         GetRowsQuery query,
         CancellationToken cancellationToken = default
     )

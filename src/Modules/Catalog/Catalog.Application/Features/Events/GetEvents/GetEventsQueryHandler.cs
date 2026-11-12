@@ -11,7 +11,7 @@ namespace Catalog.Application.Features.Events.GetEvents;
 internal sealed class GetEventsQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetEventsQuery, PagedResult<EventDto>>
 {
-    public async Task<Result<PagedResult<EventDto>>> Handle(
+    public async Task<Result<PagedResult<EventDto>>> HandleAsync(
         GetEventsQuery query,
         CancellationToken cancellationToken = default
     )

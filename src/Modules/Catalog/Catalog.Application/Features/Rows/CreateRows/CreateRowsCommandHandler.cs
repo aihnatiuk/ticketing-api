@@ -15,7 +15,7 @@ internal sealed class CreateRowsCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<CreateRowsCommand, IReadOnlyList<long>>
 {
-    public async Task<Result<IReadOnlyList<long>>> Handle(
+    public async Task<Result<IReadOnlyList<long>>> HandleAsync(
         CreateRowsCommand command,
         CancellationToken cancellationToken = default
     )

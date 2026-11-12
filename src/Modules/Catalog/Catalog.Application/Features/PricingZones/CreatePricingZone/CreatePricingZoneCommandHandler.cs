@@ -12,7 +12,7 @@ internal sealed class CreatePricingZoneCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<CreatePricingZoneCommand, long>
 {
-    public async Task<Result<long>> Handle(
+    public async Task<Result<long>> HandleAsync(
         CreatePricingZoneCommand command,
         CancellationToken cancellationToken = default
     )

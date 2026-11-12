@@ -12,7 +12,7 @@ namespace Catalog.Application.Features.Seats.GetSeats;
 internal sealed class GetSeatsQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetSeatsQuery, PagedResult<SeatDto>>
 {
-    public async Task<Result<PagedResult<SeatDto>>> Handle(
+    public async Task<Result<PagedResult<SeatDto>>> HandleAsync(
         GetSeatsQuery query,
         CancellationToken cancellationToken = default
     )

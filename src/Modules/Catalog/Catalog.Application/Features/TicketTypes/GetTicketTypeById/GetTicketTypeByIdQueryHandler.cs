@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.TicketTypes.GetTicketTypeById;
 internal sealed class GetTicketTypeByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetTicketTypeByIdQuery, TicketTypeDto>
 {
-    public async Task<Result<TicketTypeDto>> Handle(
+    public async Task<Result<TicketTypeDto>> HandleAsync(
         GetTicketTypeByIdQuery query,
         CancellationToken cancellationToken = default
     )

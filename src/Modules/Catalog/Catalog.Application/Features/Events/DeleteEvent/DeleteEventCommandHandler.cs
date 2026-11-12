@@ -11,7 +11,7 @@ internal sealed class DeleteEventCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteEventCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteEventCommand command,
         CancellationToken cancellationToken = default
     )

@@ -12,7 +12,7 @@ namespace Catalog.Application.Features.Sections.GetSections;
 internal sealed class GetSectionsQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetSectionsQuery, PagedResult<SectionDto>>
 {
-    public async Task<Result<PagedResult<SectionDto>>> Handle(
+    public async Task<Result<PagedResult<SectionDto>>> HandleAsync(
         GetSectionsQuery query,
         CancellationToken cancellationToken = default
     )

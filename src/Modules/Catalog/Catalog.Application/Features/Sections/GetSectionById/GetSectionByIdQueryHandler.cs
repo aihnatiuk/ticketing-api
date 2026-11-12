@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.Sections.GetSectionById;
 internal sealed class GetSectionByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetSectionByIdQuery, SectionDto>
 {
-    public async Task<Result<SectionDto>> Handle(
+    public async Task<Result<SectionDto>> HandleAsync(
         GetSectionByIdQuery query,
         CancellationToken cancellationToken = default
     )

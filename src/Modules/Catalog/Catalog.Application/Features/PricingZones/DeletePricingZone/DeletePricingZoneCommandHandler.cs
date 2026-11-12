@@ -10,7 +10,7 @@ internal sealed class DeletePricingZoneCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeletePricingZoneCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeletePricingZoneCommand command,
         CancellationToken cancellationToken = default
     )

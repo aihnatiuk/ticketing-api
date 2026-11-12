@@ -12,7 +12,7 @@ internal sealed class DeleteEventPriceCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteEventPriceCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteEventPriceCommand command,
         CancellationToken cancellationToken = default
     )

@@ -12,7 +12,7 @@ internal sealed class UpdateSeatCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateSeatCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateSeatCommand command,
         CancellationToken cancellationToken = default
     )

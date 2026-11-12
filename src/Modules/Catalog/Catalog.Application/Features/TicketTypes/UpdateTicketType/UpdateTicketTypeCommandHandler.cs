@@ -10,7 +10,7 @@ internal sealed class UpdateTicketTypeCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateTicketTypeCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateTicketTypeCommand command,
         CancellationToken cancellationToken = default
     )

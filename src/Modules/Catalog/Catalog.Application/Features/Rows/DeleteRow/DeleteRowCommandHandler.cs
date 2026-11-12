@@ -12,7 +12,7 @@ internal sealed class DeleteRowCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteRowCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteRowCommand command,
         CancellationToken cancellationToken = default
     )

@@ -14,7 +14,7 @@ internal sealed class CreateSeatsCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<CreateSeatsCommand, IReadOnlyList<long>>
 {
-    public async Task<Result<IReadOnlyList<long>>> Handle(
+    public async Task<Result<IReadOnlyList<long>>> HandleAsync(
         CreateSeatsCommand command,
         CancellationToken cancellationToken = default
     )

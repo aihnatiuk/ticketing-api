@@ -12,7 +12,7 @@ internal sealed class DeleteSeatCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteSeatCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteSeatCommand command,
         CancellationToken cancellationToken = default
     )

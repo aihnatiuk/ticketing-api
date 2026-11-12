@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.Rows.GetRowById;
 internal sealed class GetRowByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetRowByIdQuery, RowDto>
 {
-    public async Task<Result<RowDto>> Handle(
+    public async Task<Result<RowDto>> HandleAsync(
         GetRowByIdQuery query,
         CancellationToken cancellationToken = default
     )

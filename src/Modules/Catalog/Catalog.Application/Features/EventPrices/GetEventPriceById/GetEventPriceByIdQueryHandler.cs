@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.EventPrices.GetEventPriceById;
 internal sealed class GetEventPriceByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetEventPriceByIdQuery, EventPriceDto>
 {
-    public async Task<Result<EventPriceDto>> Handle(
+    public async Task<Result<EventPriceDto>> HandleAsync(
         GetEventPriceByIdQuery query,
         CancellationToken cancellationToken = default
     )

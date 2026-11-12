@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.Events.GetEventById;
 internal sealed class GetEventByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetEventByIdQuery, EventDto>
 {
-    public async Task<Result<EventDto>> Handle(
+    public async Task<Result<EventDto>> HandleAsync(
         GetEventByIdQuery query,
         CancellationToken cancellationToken = default
     )

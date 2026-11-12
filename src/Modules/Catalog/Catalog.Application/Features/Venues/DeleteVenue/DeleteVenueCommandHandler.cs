@@ -10,7 +10,7 @@ internal sealed class DeleteVenueCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<DeleteVenueCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         DeleteVenueCommand command,
         CancellationToken cancellationToken = default
     )

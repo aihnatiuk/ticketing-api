@@ -12,7 +12,7 @@ internal sealed class UpdateRowCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateRowCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateRowCommand command,
         CancellationToken cancellationToken = default
     )

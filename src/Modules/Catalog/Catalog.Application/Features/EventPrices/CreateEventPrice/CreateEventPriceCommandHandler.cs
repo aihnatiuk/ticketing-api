@@ -16,7 +16,7 @@ internal sealed class CreateEventPriceCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<CreateEventPriceCommand, long>
 {
-    public async Task<Result<long>> Handle(
+    public async Task<Result<long>> HandleAsync(
         CreateEventPriceCommand command,
         CancellationToken cancellationToken = default
     )

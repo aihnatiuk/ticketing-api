@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.TicketTypes.GetTicketTypes;
 internal sealed class GetTicketTypesQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetTicketTypesQuery, IReadOnlyList<TicketTypeDto>>
 {
-    public async Task<Result<IReadOnlyList<TicketTypeDto>>> Handle(
+    public async Task<Result<IReadOnlyList<TicketTypeDto>>> HandleAsync(
         GetTicketTypesQuery query,
         CancellationToken cancellationToken = default
     )

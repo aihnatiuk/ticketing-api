@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.PricingZones.GetPricingZoneById;
 internal sealed class GetPricingZoneByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetPricingZoneByIdQuery, PricingZoneDto>
 {
-    public async Task<Result<PricingZoneDto>> Handle(
+    public async Task<Result<PricingZoneDto>> HandleAsync(
         GetPricingZoneByIdQuery query,
         CancellationToken cancellationToken = default
     )

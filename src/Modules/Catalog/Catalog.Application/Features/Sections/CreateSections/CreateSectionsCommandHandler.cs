@@ -14,7 +14,7 @@ internal sealed class CreateSectionsCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<CreateSectionsCommand, IReadOnlyList<long>>
 {
-    public async Task<Result<IReadOnlyList<long>>> Handle(
+    public async Task<Result<IReadOnlyList<long>>> HandleAsync(
         CreateSectionsCommand command,
         CancellationToken cancellationToken = default
     )

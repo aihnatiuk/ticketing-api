@@ -16,7 +16,7 @@ internal sealed class UpdateSectionCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateSectionCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateSectionCommand command,
         CancellationToken cancellationToken = default
     )

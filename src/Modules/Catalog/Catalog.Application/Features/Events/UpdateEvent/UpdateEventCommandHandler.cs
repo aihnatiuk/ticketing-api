@@ -11,7 +11,7 @@ internal sealed class UpdateEventCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateEventCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateEventCommand command,
         CancellationToken cancellationToken = default
     )

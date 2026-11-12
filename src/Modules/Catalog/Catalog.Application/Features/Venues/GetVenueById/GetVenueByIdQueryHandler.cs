@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.Venues.GetVenueById;
 internal sealed class GetVenueByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetVenueByIdQuery, VenueDto>
 {
-    public async Task<Result<VenueDto>> Handle(
+    public async Task<Result<VenueDto>> HandleAsync(
         GetVenueByIdQuery query,
         CancellationToken cancellationToken = default
     )

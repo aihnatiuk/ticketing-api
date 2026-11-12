@@ -10,7 +10,7 @@ internal sealed class UpdateVenueCommandHandler(
     IUnitOfWork<CatalogModule> unitOfWork
 ) : ICommandHandler<UpdateVenueCommand>
 {
-    public async Task<Result> Handle(
+    public async Task<Result> HandleAsync(
         UpdateVenueCommand command,
         CancellationToken cancellationToken = default
     )

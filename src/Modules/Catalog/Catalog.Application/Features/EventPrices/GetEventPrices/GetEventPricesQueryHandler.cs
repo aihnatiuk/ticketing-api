@@ -11,7 +11,7 @@ namespace Catalog.Application.Features.EventPrices.GetEventPrices;
 internal sealed class GetEventPricesQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetEventPricesQuery, IReadOnlyList<EventPriceDto>>
 {
-    public async Task<Result<IReadOnlyList<EventPriceDto>>> Handle(
+    public async Task<Result<IReadOnlyList<EventPriceDto>>> HandleAsync(
         GetEventPricesQuery query,
         CancellationToken cancellationToken = default
     )

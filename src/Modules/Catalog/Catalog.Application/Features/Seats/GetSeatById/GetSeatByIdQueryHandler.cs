@@ -10,7 +10,7 @@ namespace Catalog.Application.Features.Seats.GetSeatById;
 internal sealed class GetSeatByIdQueryHandler(ICatalogDbContext db)
     : IQueryHandler<GetSeatByIdQuery, SeatDto>
 {
-    public async Task<Result<SeatDto>> Handle(
+    public async Task<Result<SeatDto>> HandleAsync(
         GetSeatByIdQuery query,
         CancellationToken cancellationToken = default
     )
