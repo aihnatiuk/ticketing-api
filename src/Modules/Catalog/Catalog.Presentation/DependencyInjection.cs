@@ -15,6 +15,8 @@ public static class DependencyInjection
         services.AddCatalogApplication();
         services.AddCatalogInfrastructure(configuration);
 
+        services.AddControllers().AddApplicationPart(typeof(DependencyInjection).Assembly);
+
         return services;
     }
 }
