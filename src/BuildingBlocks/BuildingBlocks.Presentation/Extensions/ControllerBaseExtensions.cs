@@ -26,7 +26,7 @@ public static class ControllerBaseExtensions
                 title: "Conflict",
                 detail: error.Description,
                 statusCode: StatusCodes.Status409Conflict,
-                extensions: DefaultExtensions(error)
+                extensions: DetailedExtensions(error)
             ),
             _ => controller.Problem(
                 title: "Internal Server Error",
@@ -38,5 +38,16 @@ public static class ControllerBaseExtensions
 
         static Dictionary<string, object?> DefaultExtensions(Error error) =>
             new() { ["errorCode"] = error.Code };
+
+        static Dictionary<string, object?> DetailedExtensions(Error error)
+        {
+            Dictionary<string, object?> extensions = DefaultExtensions(error);
+            if (error.Details is not null)
+            {
+                extensions.Add("errorDetails", error.Details);
+            }
+
+            return extensions;
+        }
     }
 }
