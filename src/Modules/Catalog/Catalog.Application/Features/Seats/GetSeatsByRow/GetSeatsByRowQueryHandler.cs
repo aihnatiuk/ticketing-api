@@ -1,5 +1,4 @@
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Pagination;
 using BuildingBlocks.Application.Results;
 using Catalog.Application.Abstractions;
 using Catalog.Application.Features.Rows;
@@ -9,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Application.Features.Seats.GetSeats;
 
-internal sealed class GetSeatsQueryHandler(ICatalogDbContext db)
-    : IQueryHandler<GetSeatsQuery, PagedResult<SeatDto>>
+internal sealed class GetSeatsByRowQueryHandler(ICatalogDbContext db)
+    : IQueryHandler<GetSeatsByRowQuery, IReadOnlyList<SeatDto>>
 {
-    public async Task<Result<PagedResult<SeatDto>>> HandleAsync(
-        GetSeatsQuery query,
+    public async Task<Result<IReadOnlyList<SeatDto>>> HandleAsync(
+        GetSeatsByRowQuery query,
         CancellationToken cancellationToken = default
     )
     {
@@ -22,18 +21,13 @@ internal sealed class GetSeatsQueryHandler(ICatalogDbContext db)
             return RowErrors.NotFound(query.RowId);
         }
 
-        var seats = db.Seats.AsNoTracking().Where(s => s.RowId == query.RowId);
-        int totalCount = await seats.CountAsync(cancellationToken);
-
-        List<Seat> pageOfSeats = await seats
+        List<Seat> seats = await db
+            .Seats.AsNoTracking()
+            .Where(s => s.RowId == query.RowId)
             .OrderBy(s => s.Label)
             .ThenBy(s => s.Id)
-            .Skip(query.Skip)
-            .Take(query.PageSize)
             .ToListAsync(cancellationToken);
 
-        List<SeatDto> items = [.. pageOfSeats.Select(SeatDto.FromDomain)];
-
-        return new PagedResult<SeatDto>(items, query.Page, query.PageSize, totalCount);
+        return seats.Select(SeatDto.FromDomain).ToList();
     }
 }
