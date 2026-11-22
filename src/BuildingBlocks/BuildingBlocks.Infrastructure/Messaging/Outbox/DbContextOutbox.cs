@@ -1,10 +1,12 @@
 using System.Text.Json;
 using BuildingBlocks.Application.Messaging;
+using BuildingBlocks.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Infrastructure.Messaging.Outbox;
 
 internal sealed class DbContextOutbox<TModule>(DbContext context) : IOutbox<TModule>
+    where TModule : IModule
 {
     public void Add<TMessage>(TMessage message)
         where TMessage : class

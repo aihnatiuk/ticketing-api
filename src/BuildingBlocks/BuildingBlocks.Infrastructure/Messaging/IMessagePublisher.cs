@@ -1,3 +1,5 @@
+using BuildingBlocks.Contracts;
+
 namespace BuildingBlocks.Infrastructure.Messaging;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace BuildingBlocks.Infrastructure.Messaging;
 /// </summary>
 /// <typeparam name="TModule">The module that owns the exchange.</typeparam>
 internal interface IMessagePublisher<TModule>
+    where TModule : IModule
 {
     Task PublishAsync(
         Guid messageId,

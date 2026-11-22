@@ -1,14 +1,16 @@
+using BuildingBlocks.Contracts;
 using BuildingBlocks.Infrastructure.Messaging.RabbitMq;
 
 namespace BuildingBlocks.Infrastructure.Messaging;
 
 /// <summary>
-/// The messaging identity of a module. One singleton exists per module, discriminated by <typeparamref name="TModule"/>.
+/// The messaging identity of a module.
 /// </summary>
-/// <param name="Name">A module name.</param>
-internal sealed record ModuleMessagingSettings<TModule>(string Name)
+internal static class ModuleMessagingSettings<TModule>
+    where TModule : IModule
 {
-    public string Exchange => RabbitMqNaming.EventsExchange(Name);
+    public static string Exchange => RabbitMqNaming.EventsExchange(TModule.ModuleName);
 
-    public string DeadLetterExchange => RabbitMqNaming.DeadLetterExchange(Name);
+    public static string DeadLetterExchange =>
+        RabbitMqNaming.DeadLetterExchange(TModule.ModuleName);
 }

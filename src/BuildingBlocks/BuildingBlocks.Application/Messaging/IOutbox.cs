@@ -1,3 +1,5 @@
+using BuildingBlocks.Contracts;
+
 namespace BuildingBlocks.Application.Messaging;
 
 /// <summary>
@@ -6,6 +8,7 @@ namespace BuildingBlocks.Application.Messaging;
 /// </summary>
 /// <typeparam name="TModule">The module type that owns the outbox.</typeparam>
 public interface IOutbox<TModule>
+    where TModule : IModule
 {
     /// <summary>
     /// Adds the message to the database context. Isn't persisted until the database context is saved.

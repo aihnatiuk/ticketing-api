@@ -1,4 +1,5 @@
 using System.Text;
+using BuildingBlocks.Contracts;
 using RabbitMQ.Client;
 
 namespace BuildingBlocks.Infrastructure.Messaging.RabbitMq;
@@ -6,10 +7,10 @@ namespace BuildingBlocks.Infrastructure.Messaging.RabbitMq;
 /// <summary>
 /// Publishes a module's outbox messages through a channel that only this module uses.
 /// </summary>
-internal sealed class RabbitMqPublisher<TModule>(
-    RabbitMqConnectionProvider connectionProvider,
-    ModuleMessagingSettings<TModule> settings
-) : IMessagePublisher<TModule>, IAsyncDisposable
+internal sealed class RabbitMqPublisher<TModule>(RabbitMqConnectionProvider connectionProvider)
+    : IMessagePublisher<TModule>,
+        IAsyncDisposable
+    where TModule : IModule
 {
     private IChannel? _channel;
 
@@ -33,7 +34,7 @@ internal sealed class RabbitMqPublisher<TModule>(
         // mandatory + publisher confirms: makes this throw,
         // so the outbox keeps the row and retries instead of silently losing the message.
         await channel.BasicPublishAsync(
-            settings.Exchange,
+            ModuleMessagingSettings<TModule>.Exchange,
             routingKey: routingKey,
             mandatory: true,
             basicProperties: properties,
@@ -67,7 +68,7 @@ internal sealed class RabbitMqPublisher<TModule>(
         );
         await RabbitMqTopology.DeclareEventsExchangeAsync(
             channel,
-            settings.Exchange,
+            ModuleMessagingSettings<TModule>.Exchange,
             cancellationToken
         );
 

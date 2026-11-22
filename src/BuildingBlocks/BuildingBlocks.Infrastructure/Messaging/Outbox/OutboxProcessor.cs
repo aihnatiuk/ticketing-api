@@ -1,3 +1,4 @@
+using BuildingBlocks.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -15,6 +16,7 @@ internal sealed class OutboxProcessor<TModule, TContext>(
     IMessagePublisher<TModule> publisher,
     ILogger<OutboxProcessor<TModule, TContext>> logger
 ) : BackgroundService
+    where TModule : IModule
     where TContext : DbContext
 {
     private const int BatchSize = 20;
