@@ -1,5 +1,6 @@
 using System.Text;
 using BuildingBlocks.Contracts;
+using BuildingBlocks.Infrastructure.Messaging.Configuration;
 using RabbitMQ.Client;
 
 namespace BuildingBlocks.Infrastructure.Messaging.RabbitMq;

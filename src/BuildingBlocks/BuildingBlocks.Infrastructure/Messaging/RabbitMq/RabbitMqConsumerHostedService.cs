@@ -1,5 +1,6 @@
 using System.Text.Json;
 using BuildingBlocks.Contracts;
+using BuildingBlocks.Infrastructure.Messaging.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
