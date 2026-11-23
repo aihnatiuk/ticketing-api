@@ -8,7 +8,7 @@ public sealed class RabbitMqOptions
 
     public int Port { get; init; } = 5672;
 
-    public string UserName { get; init; } = "guest";
+    public required string UserName { get; init; }
 
-    public string Password { get; init; } = "guest";
+    public required string Password { get; init; }
 }
