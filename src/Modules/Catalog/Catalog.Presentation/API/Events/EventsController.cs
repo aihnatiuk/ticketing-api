@@ -6,6 +6,7 @@ using Catalog.Application.Features.Events.Common;
 using Catalog.Application.Features.Events.CreateEvent;
 using Catalog.Application.Features.Events.GetEventById;
 using Catalog.Application.Features.Events.GetEvents;
+using Catalog.Application.Features.Events.PublishEvent;
 using Catalog.Application.Features.Sections.GetSectionSeatMap;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,24 @@ public class EventsController : ControllerBase
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { eventId = result.Value }, result.Value)
             : this.ToProblem(result.Error);
+    }
+
+    [HttpPost("{eventId:long}/publish")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult> Publish(
+        [FromRoute] long eventId,
+        [FromServices] ICommandHandler<PublishEventCommand> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        Result result = await handler.HandleAsync(
+            new PublishEventCommand(eventId),
+            cancellationToken
+        );
+
+        return result.IsSuccess ? NoContent() : this.ToProblem(result.Error);
     }
 
     [HttpGet("{eventId:long}/sections/{sectionId:long}/seats")]

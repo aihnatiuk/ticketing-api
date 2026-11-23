@@ -1,4 +1,5 @@
 using BuildingBlocks.Application.Abstractions;
+using BuildingBlocks.Infrastructure.Messaging.Configuration;
 using BuildingBlocks.Infrastructure.Persistence;
 using Catalog.Application;
 using Catalog.Application.Abstractions;
@@ -18,6 +19,10 @@ public static class DependencyInjection
     )
     {
         services.AddPersistence(configuration);
+        services.AddMessaging<CatalogModule, CatalogDbContext>(
+            configuration,
+            messaging => messaging.UseOutbox()
+        );
 
         return services;
     }

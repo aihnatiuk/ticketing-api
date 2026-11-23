@@ -1,4 +1,5 @@
 using BuildingBlocks.Application;
+using Catalog.Application.Features.Events.PublishEvent;
 using Catalog.Application.Features.Venues.Common.Layout;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,7 @@ public static class DependencyInjection
     {
         services.AddHandlersFromAssembly(typeof(CatalogModule).Assembly);
         services.AddScoped<IVenueLayoutValidator, VenueLayoutValidator>();
+        services.AddScoped<IEventPublishingReader, EventPublishingReader>();
 
         return services;
     }

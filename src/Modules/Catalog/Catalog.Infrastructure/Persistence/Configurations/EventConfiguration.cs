@@ -29,7 +29,7 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsUnicode(false)
             .IsRequired(); // ISO 4217
 
-        builder.Property(e => e.Status).HasConversion<short>().IsRequired();
+        builder.Property(e => e.Status).HasConversion<short>().IsConcurrencyToken().IsRequired();
 
         builder
             .HasOne(e => e.Venue)
