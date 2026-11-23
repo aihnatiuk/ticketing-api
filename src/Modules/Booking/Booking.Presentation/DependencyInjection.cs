@@ -1,3 +1,4 @@
+using Booking.Application;
 using Booking.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
+        services.AddBookingApplication();
         services.AddBookingInfrastructure(configuration);
 
         return services;

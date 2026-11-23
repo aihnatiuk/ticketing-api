@@ -2,7 +2,9 @@ using Booking.Application;
 using Booking.Application.Abstractions;
 using Booking.Infrastructure.Persistence;
 using BuildingBlocks.Application.Abstractions;
+using BuildingBlocks.Infrastructure.Messaging.Configuration;
 using BuildingBlocks.Infrastructure.Persistence;
+using Catalog.Contracts.IntegrationEvents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,10 @@ public static class DependencyInjection
     )
     {
         services.AddPersistence(configuration);
+        services.AddMessaging<BookingModule, BookingDbContext>(
+            configuration,
+            messaging => messaging.Subscribe<EventPublishedIntegrationEvent>()
+        );
 
         return services;
     }
