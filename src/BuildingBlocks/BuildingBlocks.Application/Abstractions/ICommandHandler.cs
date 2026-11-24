@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 
 namespace BuildingBlocks.Application.Abstractions;
 

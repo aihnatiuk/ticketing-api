@@ -1,6 +1,6 @@
 using Booking.Application.Features.Availability.GetAvailability;
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using BuildingBlocks.Presentation.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Application.Messaging;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Application.Abstractions;
 using Catalog.Application.Features.Venues;
 using Catalog.Application.Features.Venues.Common.Layout;

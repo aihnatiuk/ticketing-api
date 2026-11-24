@@ -1,5 +1,5 @@
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Application.Abstractions;
 using Catalog.Application.Features.Sections.Common;
 using Catalog.Domain.Entities;

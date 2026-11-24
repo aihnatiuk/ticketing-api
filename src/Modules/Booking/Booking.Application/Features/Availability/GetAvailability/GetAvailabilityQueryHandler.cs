@@ -1,6 +1,6 @@
 using Booking.Application.Abstractions;
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Application.Features.Availability.GetAvailability;

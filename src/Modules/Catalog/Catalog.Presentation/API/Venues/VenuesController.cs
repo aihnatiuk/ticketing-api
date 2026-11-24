@@ -1,6 +1,6 @@
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Application.Pagination;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using BuildingBlocks.Presentation.Extensions;
 using Catalog.Application.Features.PricingZones.Common;
 using Catalog.Application.Features.PricingZones.CreatePricingZone;

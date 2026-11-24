@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

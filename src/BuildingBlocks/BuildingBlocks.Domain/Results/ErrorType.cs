@@ -1,4 +1,4 @@
-namespace BuildingBlocks.Application.Results;
+namespace BuildingBlocks.Domain.Results;
 
 public enum ErrorType
 {

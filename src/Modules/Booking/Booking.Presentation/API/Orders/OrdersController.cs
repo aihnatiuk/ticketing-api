@@ -1,7 +1,7 @@
 using Booking.Application.Features.Orders.Common;
 using Booking.Application.Features.Orders.GetOrder;
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using BuildingBlocks.Presentation.Extensions;
 using Microsoft.AspNetCore.Mvc;
 

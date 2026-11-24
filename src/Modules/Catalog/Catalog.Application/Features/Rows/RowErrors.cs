@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Features.Rows;

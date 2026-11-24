@@ -1,5 +1,5 @@
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using BuildingBlocks.Presentation.Extensions;
 using Catalog.Application.Features.Seats.Common;
 using Catalog.Application.Features.Seats.CreateSeats;
