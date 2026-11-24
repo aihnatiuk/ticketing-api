@@ -1,10 +1,9 @@
 using Booking.Domain.Entities;
-using BuildingBlocks.Application.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Booking.Application.Abstractions;
 
-public interface IBookingDbContext : IUnitOfWork<BookingModule>
+public interface IBookingDbContext
 {
     DbSet<DedicatedSeat> DedicatedSeats { get; }
 

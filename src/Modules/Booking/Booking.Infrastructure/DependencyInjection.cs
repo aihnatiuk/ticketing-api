@@ -45,7 +45,7 @@ public static class DependencyInjection
             )
         );
         services.AddScoped<IBookingDbContext>(sp => sp.GetRequiredService<BookingDbContext>());
-        services.AddScoped<IUnitOfWork<BookingModule>>(sp =>
+        services.AddScoped<IUnitOfWork<BookingModule>>(sp => new UnitOfWork<BookingModule>(
             sp.GetRequiredService<BookingDbContext>()
         );
 

@@ -45,9 +45,9 @@ public static class DependencyInjection
             )
         );
         services.AddScoped<ICatalogDbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
-        services.AddScoped<IUnitOfWork<CatalogModule>>(sp =>
+        services.AddScoped<IUnitOfWork<CatalogModule>>(sp => new UnitOfWork<CatalogModule>(
             sp.GetRequiredService<CatalogDbContext>()
-        );
+        ));
 
         services.AddScoped<IVenueRepository, VenueRepository>();
         services.AddScoped<IPricingZoneRepository, PricingZoneRepository>();

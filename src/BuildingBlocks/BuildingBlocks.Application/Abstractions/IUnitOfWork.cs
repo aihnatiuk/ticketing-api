@@ -9,5 +9,7 @@ namespace BuildingBlocks.Application.Abstractions;
 public interface IUnitOfWork<TModule>
     where TModule : IModule
 {
+    Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
