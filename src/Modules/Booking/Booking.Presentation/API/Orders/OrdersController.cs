@@ -1,0 +1,26 @@
+using Booking.Application.Features.Orders.Common;
+using Booking.Application.Features.Orders.GetOrder;
+using BuildingBlocks.Application.Abstractions;
+using BuildingBlocks.Application.Results;
+using BuildingBlocks.Presentation.Extensions;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Booking.Presentation.API.Orders;
+
+[Route("[controller]")]
+[ApiController]
+public class OrdersController : ControllerBase
+{
+    [HttpGet("{orderId:long}")]
+    public async Task<ActionResult<OrderDto>> Get(
+        [FromRoute] long orderId,
+        [FromServices] IQueryHandler<GetOrderQuery, OrderDto> queryHandler,
+        CancellationToken cancellationToken
+    )
+    {
+        GetOrderQuery query = new(orderId);
+        Result<OrderDto> result = await queryHandler.HandleAsync(query, cancellationToken);
+
+        return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
+    }
+}
