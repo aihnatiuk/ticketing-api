@@ -1,5 +1,6 @@
 using Booking.Application.Abstractions;
 using Booking.Domain.Entities;
+using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Application.Messaging;
 using Catalog.Contracts.IntegrationEvents;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,10 @@ namespace Booking.Application.EventHandlers;
 /// <summary>
 /// Creates the availability records of a newly published event.
 /// </summary>
-internal sealed class EventPublishedIntegrationEventHandler(IBookingDbContext db)
-    : IIntegrationEventHandler<EventPublishedIntegrationEvent>
+internal sealed class EventPublishedIntegrationEventHandler(
+    IBookingDbContext db,
+    IUnitOfWork<BookingModule> unitOfWork
+) : IIntegrationEventHandler<EventPublishedIntegrationEvent>
 {
     public async Task HandleAsync(
         EventPublishedIntegrationEvent integrationEvent,
@@ -49,6 +52,6 @@ internal sealed class EventPublishedIntegrationEventHandler(IBookingDbContext db
             })
         );
 
-        await db.SaveChangesAsync(cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

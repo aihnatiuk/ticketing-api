@@ -14,13 +14,13 @@ public static class ControllerBaseExtensions
                 title: "Not Found",
                 detail: error.Description,
                 statusCode: StatusCodes.Status404NotFound,
-                extensions: DefaultExtensions(error)
+                extensions: DetailedExtensions(error)
             ),
             ErrorType.Validation => controller.Problem(
                 title: "Bad Request",
                 detail: error.Description,
                 statusCode: StatusCodes.Status400BadRequest,
-                extensions: DefaultExtensions(error)
+                extensions: DetailedExtensions(error)
             ),
             ErrorType.Conflict => controller.Problem(
                 title: "Conflict",

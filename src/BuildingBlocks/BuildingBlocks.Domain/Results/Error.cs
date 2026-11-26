@@ -14,12 +14,12 @@ public readonly record struct Error(
     object? Details = null
 )
 {
-    public static Error NotFound(string code, string description) =>
-        new(code, description, ErrorType.NotFound);
+    public static Error NotFound(string code, string description, object? details = null) =>
+        new(code, description, ErrorType.NotFound, details);
 
     public static Error Conflict(string code, string description, object? details = null) =>
         new(code, description, ErrorType.Conflict, details);
 
-    public static Error Validation(string code, string description) =>
-        new(code, description, ErrorType.Validation);
+    public static Error Validation(string code, string description, object? details = null) =>
+        new(code, description, ErrorType.Validation, details);
 }

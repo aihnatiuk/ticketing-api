@@ -28,6 +28,12 @@ public static class EventErrors
             new { PricingZoneIds = pricingZoneIds }
         );
 
+    public static Error PricesUnavailable(long id, EventStatus status) =>
+        Error.Conflict(
+            "Events.PricesUnavailable",
+            $"Prices unavailable for {nameof(Event)} with id {id} because it has a status '{status}'."
+        );
+
     public static Error ConcurrentModification(long id) =>
         Error.Conflict(
             "Events.ConcurrentModification",

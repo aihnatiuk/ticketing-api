@@ -1,4 +1,5 @@
 using Booking.Application.Features.Orders.Common;
+using Booking.Application.Features.Orders.CreateOrder;
 using Booking.Application.Features.Orders.GetOrder;
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Domain.Results;
@@ -20,6 +21,18 @@ public class OrdersController : ControllerBase
     {
         GetOrderQuery query = new(orderId);
         Result<OrderDto> result = await queryHandler.HandleAsync(query, cancellationToken);
+
+        return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<OrderDto>> Create(
+        [FromBody] CreateOrderCommand command,
+        [FromServices] ICommandHandler<CreateOrderCommand, OrderDto> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        Result<OrderDto> result = await handler.HandleAsync(command, cancellationToken);
 
         return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
     }

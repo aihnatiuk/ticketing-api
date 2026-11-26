@@ -1,6 +1,7 @@
 using Booking.Application;
 using Booking.Application.Abstractions;
 using Booking.Infrastructure.Persistence;
+using Booking.Infrastructure.Persistence.Repositories;
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Infrastructure.Messaging.Configuration;
 using BuildingBlocks.Infrastructure.Persistence;
@@ -47,7 +48,10 @@ public static class DependencyInjection
         services.AddScoped<IBookingDbContext>(sp => sp.GetRequiredService<BookingDbContext>());
         services.AddScoped<IUnitOfWork<BookingModule>>(sp => new UnitOfWork<BookingModule>(
             sp.GetRequiredService<BookingDbContext>()
-        );
+        ));
+
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ISeatRepository, SeatRepository>();
 
         services.AddMigrationService<BookingDbContext>();
 

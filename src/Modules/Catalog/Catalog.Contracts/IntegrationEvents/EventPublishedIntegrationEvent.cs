@@ -9,7 +9,7 @@ namespace Catalog.Contracts.IntegrationEvents;
 /// <param name="EventId">Id of the published event.</param>
 /// <param name="SeatIds">Ids of all seats in the reserved-seating sections of the event's venue.</param>
 /// <param name="GeneralAdmissionSections">Capacity of every general-admission section of the event's venue.</param>
-[IntegrationEvent(ICatalogModule.ModuleName, "event-published")]
+[IntegrationEvent(ICatalogModule.Name, "event-published")]
 public sealed record EventPublishedIntegrationEvent(
     long EventId,
     IReadOnlyList<long> SeatIds,

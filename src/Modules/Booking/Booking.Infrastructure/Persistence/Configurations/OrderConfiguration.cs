@@ -26,5 +26,10 @@ internal sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired(); // ISO 4217
 
         builder.Property(o => o.TotalPrice).HasPrecision(18, 2).IsRequired();
+
+        builder
+            .Navigation(o => o.OrderItems)
+            .HasField("_orderItems")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }

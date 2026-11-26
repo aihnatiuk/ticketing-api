@@ -6,4 +6,35 @@ public static class OrderErrors
 {
     public static Error NotFound(long orderId) =>
         Error.NotFound("Order.NotFound", $"Order with id: '{orderId}' was not found.");
+
+    public static Error SeatsNotFound(IReadOnlyCollection<long> seatIds) =>
+        Error.NotFound(
+            "Order.SeatsNotFound",
+            $"Some seats were not found for this event.",
+            seatIds
+        );
+
+    public static Error SeatsUnavailable(IReadOnlyCollection<long> seatIds) =>
+        Error.Conflict("Order.SeatsUnavailable", $"Some seats are not available.", seatIds);
+
+    public static Error SectionsNotFound(IReadOnlyCollection<long> sectionIds) =>
+        Error.NotFound(
+            "Order.SectionsNotFound",
+            $"Some general admission sections were not found for this event.",
+            sectionIds
+        );
+
+    public static Error TicketTypesNotAvailable(IReadOnlyCollection<object> items) =>
+        Error.Validation(
+            "Order.TicketTypesNotAvailable",
+            "Some ticket types are not available for the requested seats or sections.",
+            items
+        );
+
+    public static Error NotEnoughTickets(IReadOnlyCollection<long> sectionIds) =>
+        Error.Conflict(
+            "Order.NotEnoughTickets",
+            "Not enough tickets left in general admission sections.",
+            sectionIds
+        );
 }

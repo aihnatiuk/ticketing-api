@@ -12,4 +12,10 @@ public sealed class DedicatedSeat : Entity<long>
     public SeatStatus Status { get; set; } = SeatStatus.Available;
 
     public long? OrderId { get; set; }
+
+    public void Reserve(long orderId)
+    {
+        Status = SeatStatus.Reserved;
+        OrderId = orderId;
+    }
 }

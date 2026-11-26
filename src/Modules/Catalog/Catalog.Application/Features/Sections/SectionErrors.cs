@@ -14,6 +14,13 @@ public static class SectionErrors
             $"{nameof(Section)} with id {id} was not found or doesn't belong to the venue with id {venueId}."
         );
 
+    public static Error NotFoundForEvent(long eventId, long[] missingSectionsIds) =>
+        Error.NotFound(
+            "Sections.NotFoundForEvent",
+            $"Some sections are not related to the event with id {eventId}.",
+            missingSectionsIds
+        );
+
     public static Error LabelTaken(string label) =>
         Error.Conflict(
             "Sections.LabelTaken",
