@@ -7,4 +7,13 @@ namespace Booking.Infrastructure.Persistence.Repositories;
 
 internal sealed class OrderRepository(BookingDbContext context)
     : BaseRepository<Order, long>(context),
-        IOrderRepository { }
+        IOrderRepository
+{
+    public async Task<Order?> GetWithItemsAsync(
+        long id,
+        CancellationToken cancellationToken = default
+    ) =>
+        await Entities
+            .Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+}

@@ -112,6 +112,10 @@ namespace Booking.Infrastructure.Persistence.Migrations
                     b.Property<long?>("PaymentId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
 
@@ -169,7 +173,7 @@ namespace Booking.Infrastructure.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BuildingBlocks.Infrastructure.Messaging.InboxMessage", b =>
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Messaging.Outbox.InboxMessage", b =>
                 {
                     b.Property<Guid>("MessageId")
                         .HasColumnType("uniqueidentifier");

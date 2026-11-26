@@ -7,6 +7,21 @@ public static class OrderErrors
     public static Error NotFound(long orderId) =>
         Error.NotFound("Order.NotFound", $"Order with id: '{orderId}' was not found.");
 
+    public static Error NoItemsRequested() =>
+        Error.Validation("Order.NoItemsRequested", "At least one item must be requested.");
+
+    public static Error NotPending(long orderId) =>
+        Error.Conflict("Order.NotPending", $"Order with id: '{orderId}' is not pending.");
+
+    public static Error Expired(long orderId) =>
+        Error.Conflict("Order.Expired", $"Order with id: '{orderId}' has expired.");
+
+    public static Error ConcurrentModification(long orderId) =>
+        Error.Conflict(
+            "Order.ConcurrentModification",
+            $"Order with id: '{orderId}' was modified concurrently. Retry the request."
+        );
+
     public static Error SeatsNotFound(IReadOnlyCollection<long> seatIds) =>
         Error.NotFound(
             "Order.SeatsNotFound",

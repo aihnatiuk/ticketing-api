@@ -30,6 +30,11 @@ public sealed class Order : Entity<long>
 
     public long? PaymentId { get; private set; }
 
+    /// <summary>
+    /// Concurrency token. Incremented on every change of the order or its items.
+    /// </summary>
+    public int Revision { get; private set; }
+
     public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
     public static Order Create(
@@ -62,10 +67,17 @@ public sealed class Order : Entity<long>
     /// Adds items to the order and recalculates the total price.
     /// </summary>
     /// <exception cref="DomainInvariantException">
-    /// A dedicated seat is added more than once, whatever the ticket type is.
+    /// The order is not pending, or a dedicated seat is added more than once, whatever the ticket type is.
     /// </exception>
     public void AddItems(IEnumerable<OrderItem> items)
     {
+        if (Status != OrderStatus.Pending)
+        {
+            throw new DomainInvariantException(
+                $"Items cannot be added to an order with status '{Status}'."
+            );
+        }
+
         HashSet<long> seatIds = _orderItems
             .Where(i => i.Type == OrderItemType.DedicatedSeat)
             .Select(i => i.CatalogRefId)
@@ -84,5 +96,8 @@ public sealed class Order : Entity<long>
 
         _orderItems.AddRange(newItems);
         TotalPrice = _orderItems.Sum(i => i.UnitPrice * i.Quantity);
+        Revision++;
     }
+
+    public bool IsExpired() => ExpiresAt <= DateTimeOffset.UtcNow;
 }
