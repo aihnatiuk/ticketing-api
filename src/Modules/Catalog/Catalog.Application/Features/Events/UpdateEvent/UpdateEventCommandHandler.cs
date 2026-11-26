@@ -27,6 +27,11 @@ internal sealed class UpdateEventCommandHandler(
             return EventErrors.CannotModifyCompleted(@event.Id);
         }
 
+        if (@event.Status is not EventStatus.Created && @event.Currency != command.Currency)
+        {
+            return EventErrors.CannotChangeCurrency(@event.Id, @event.Status);
+        }
+
         @event.Title = command.Title;
         @event.Description = command.Description;
         @event.StartsAt = command.StartsAt;

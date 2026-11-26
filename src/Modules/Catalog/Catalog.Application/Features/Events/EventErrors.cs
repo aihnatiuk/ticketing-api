@@ -40,6 +40,12 @@ public static class EventErrors
             $"{nameof(Event)} with id {id} was modified by another request. Retry the operation."
         );
 
+    public static Error CannotChangeCurrency(long id, EventStatus status) =>
+        Error.Conflict(
+            "Events.CannotChangeCurrency",
+            $"Currency of {nameof(Event)} with id {id} cannot be changed because it has a status '{status}'."
+        );
+
     public static Error CannotModifyCompleted(long id) =>
         Error.Conflict(
             "Events.CannotModifyCompleted",
