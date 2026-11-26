@@ -2,6 +2,7 @@ using Booking.Application.Features.Orders.AddOrderItems;
 using Booking.Application.Features.Orders.Common;
 using Booking.Application.Features.Orders.CreateOrder;
 using Booking.Application.Features.Orders.GetOrder;
+using Booking.Application.Features.Orders.RemoveOrderItem;
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Domain.Results;
 using BuildingBlocks.Presentation.Extensions;
@@ -40,6 +41,23 @@ public class OrdersController : ControllerBase
     )
     {
         AddOrderItemsCommand command = new(orderId, items);
+        Result<OrderDto> result = await handler.HandleAsync(command, cancellationToken);
+
+        return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
+    }
+
+    [HttpDelete("{orderId:long}/items/{itemId:long}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<OrderDto>> RemoveItem(
+        [FromRoute] long orderId,
+        [FromRoute] long itemId,
+        [FromServices] ICommandHandler<RemoveOrderItemCommand, OrderDto> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        RemoveOrderItemCommand command = new(orderId, itemId);
         Result<OrderDto> result = await handler.HandleAsync(command, cancellationToken);
 
         return result.IsSuccess ? result.Value : this.ToProblem(result.Error);

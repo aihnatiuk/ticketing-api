@@ -57,4 +57,25 @@ internal sealed class SeatRepository(BookingDbContext context) : ISeatRepository
 
         return affected == 1;
     }
+
+    public async Task<bool> TryReleaseGeneralAdmissionAsync(
+        long eventId,
+        long sectionId,
+        int quantity,
+        CancellationToken cancellationToken = default
+    )
+    {
+        int affected = await context
+            .GeneralSeats.Where(s =>
+                s.EventId == eventId
+                && s.SectionId == sectionId
+                && s.AvailableSeats + quantity <= s.TotalSeats
+            )
+            .ExecuteUpdateAsync(
+                set => set.SetProperty(s => s.AvailableSeats, s => s.AvailableSeats + quantity),
+                cancellationToken
+            );
+
+        return affected == 1;
+    }
 }

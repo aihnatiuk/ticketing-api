@@ -139,6 +139,47 @@ internal sealed class OrderingService(
         return Result.Success();
     }
 
+    public async Task<Result> ReleaseReservationAsync(
+        Order order,
+        OrderItem item,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (item.Type == OrderItemType.DedicatedSeat)
+        {
+            DedicatedSeat[] loaded = await seats.GetDedicatedSeatsAsync(
+                order.EventId,
+                [item.CatalogRefId],
+                cancellationToken
+            );
+
+            DedicatedSeat? seat = loaded.SingleOrDefault();
+            if (seat is null || seat.Status != SeatStatus.Reserved || seat.OrderId != order.Id)
+            {
+                throw new InvalidOperationException(
+                    $"Dedicated seat '{item.CatalogRefId}' is not reserved by order '{order.Id}'."
+                );
+            }
+
+            seat.Release();
+
+            return Result.Success();
+        }
+
+        bool released = await seats.TryReleaseGeneralAdmissionAsync(
+            order.EventId,
+            item.CatalogRefId,
+            item.Quantity,
+            cancellationToken
+        );
+        if (!released)
+        {
+            return OrderErrors.ConcurrentModification(order.Id);
+        }
+
+        return Result.Success();
+    }
+
     private async Task<Result<DedicatedSeat[]>> LoadRequestedDedicatedSeatsAsync(
         long eventId,
         IReadOnlyList<DedicatedSeatRequestDto> requested,

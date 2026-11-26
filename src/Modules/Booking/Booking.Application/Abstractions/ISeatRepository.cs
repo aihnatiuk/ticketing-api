@@ -36,4 +36,18 @@ public interface ISeatRepository
         int quantity,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Atomically returns the quantity to the section's available seats.
+    /// </summary>
+    /// <returns>
+    /// False if the section was not found or returning the quantity would exceed its total seats;
+    /// nothing is changed in that case.
+    /// </returns>
+    Task<bool> TryReleaseGeneralAdmissionAsync(
+        long eventId,
+        long sectionId,
+        int quantity,
+        CancellationToken cancellationToken = default
+    );
 }

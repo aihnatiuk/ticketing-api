@@ -1,3 +1,4 @@
+using Booking.Domain.Entities;
 using BuildingBlocks.Domain.Results;
 
 namespace Booking.Application.Features.Orders.Common.Services;
@@ -27,6 +28,27 @@ public interface IOrderingService
     Task<Result> ReserveAsync(
         long orderId,
         PreparedOrderDetails orderDetails,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// Releases the reservation held by an order item that is being removed from the order.
+    /// Dedicated seats are only modified in the change tracker; the caller must save changes.
+    /// General admission seats are returned to the section immediately.
+    /// </summary>
+    /// <param name="order">The order the item belongs to.</param>
+    /// <param name="item">The order item whose reservation is released.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>
+    /// The result indicating whether the release succeeded. A general admission release that could not be
+    /// applied is reported as a concurrent modification of the order.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    /// A dedicated seat reservation is missing or inconsistent with the order item.
+    /// </exception>
+    Task<Result> ReleaseReservationAsync(
+        Order order,
+        OrderItem item,
         CancellationToken cancellationToken = default
     );
 }

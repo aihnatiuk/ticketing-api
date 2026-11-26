@@ -6,6 +6,8 @@ namespace Booking.Domain.Entities;
 
 public sealed class Order : Entity<long>
 {
+    public static readonly TimeSpan ExpirationTimeout = TimeSpan.FromMinutes(5);
+
     private readonly List<OrderItem> _orderItems = [];
 
     private Order() { }
@@ -49,7 +51,7 @@ public sealed class Order : Entity<long>
         Order order = new()
         {
             CreatedAt = now,
-            ExpiresAt = now.AddMinutes(5),
+            ExpiresAt = now.Add(ExpirationTimeout),
             UserId = userId,
             EventId = eventId,
             Currency = currency,
@@ -95,9 +97,42 @@ public sealed class Order : Entity<long>
         }
 
         _orderItems.AddRange(newItems);
-        TotalPrice = _orderItems.Sum(i => i.UnitPrice * i.Quantity);
-        Revision++;
+        OnOrderItemsChanged();
+    }
+
+    /// <summary>
+    /// Removes an item from the order and recalculates the total price.
+    /// </summary>
+    /// <returns>True if the item was removed; false if the order has no such item.</returns>
+    /// <exception cref="DomainInvariantException">
+    /// The order is not pending.
+    /// </exception>
+    public bool RemoveItem(long itemId)
+    {
+        if (Status != OrderStatus.Pending)
+        {
+            throw new DomainInvariantException(
+                $"Items cannot be removed from an order with status '{Status}'."
+            );
+        }
+
+        OrderItem? item = _orderItems.FirstOrDefault(i => i.Id == itemId);
+        if (item is null)
+        {
+            return false;
+        }
+
+        _orderItems.Remove(item);
+        OnOrderItemsChanged();
+
+        return true;
     }
 
     public bool IsExpired() => ExpiresAt <= DateTimeOffset.UtcNow;
+
+    private void OnOrderItemsChanged()
+    {
+        TotalPrice = _orderItems.Sum(i => i.UnitPrice * i.Quantity);
+        Revision++;
+    }
 }
