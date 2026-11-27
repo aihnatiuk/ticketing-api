@@ -54,4 +54,15 @@ public sealed class PaymentTransaction : Entity<long>
         Status = PaymentStatus.Completed;
         ProcessedAt = DateTimeOffset.UtcNow;
     }
+
+    public void Fail()
+    {
+        if (Status != PaymentStatus.Pending)
+        {
+            throw new DomainInvariantException($"Payment {Id} is {Status} and cannot be failed.");
+        }
+
+        Status = PaymentStatus.Failed;
+        ProcessedAt = DateTimeOffset.UtcNow;
+    }
 }

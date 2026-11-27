@@ -6,7 +6,17 @@ namespace Booking.Domain.Entities;
 
 public sealed class Order : Entity<long>
 {
+    /// <summary>
+    /// The number of failed payment attempts after which the order abandoned and its seats are released.
+    /// </summary>
+    public const int MaxPaymentAttempts = 3;
+
     public static readonly TimeSpan ExpirationTimeout = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    /// The time given to retry the payment after a failed attempt.
+    /// </summary>
+    public static readonly TimeSpan PaymentRetryTimeout = TimeSpan.FromMinutes(1);
 
     private readonly List<OrderItem> _orderItems = [];
 
@@ -161,6 +171,43 @@ public sealed class Order : Entity<long>
 
         Status = OrderStatus.Paid;
         Revision++;
+    }
+
+    /// <summary>
+    /// Records a failed payment attempt. While attempts remain, the order returns to pending with a short
+    /// window to retry; once <see cref="MaxPaymentAttempts"/> is reached, the order is given up.
+    /// </summary>
+    /// <param name="failedAttempts">Number of failed payments of the order, including the one that just failed.</param>
+    /// <returns>True if attempts are exhausted and the reserved seats must be released.</returns>
+    /// <exception cref="DomainInvariantException">The order is not awaiting payment.</exception>
+    public bool FailPayment(int failedAttempts)
+    {
+        if (Status != OrderStatus.PaymentProcessing)
+        {
+            throw new DomainInvariantException(
+                $"Payment cannot fail for an order with status '{Status}'."
+            );
+        }
+
+        PaymentId = null;
+        Revision++;
+
+        bool attemptsExhausted = failedAttempts >= MaxPaymentAttempts;
+        if (attemptsExhausted)
+        {
+            Status = OrderStatus.PaymentFailed;
+            return true;
+        }
+
+        Status = OrderStatus.Pending;
+        if (ExpiresAt - DateTimeOffset.UtcNow < PaymentRetryTimeout)
+        {
+            // Extend reservation so that the user can safely retry payment up to MaxPaymentAttempts
+            // without order being automatically expired and reservations released.
+            ExpiresAt = ExpiresAt.Add(PaymentRetryTimeout);
+        }
+
+        return false;
     }
 
     public bool IsExpired() => ExpiresAt <= DateTimeOffset.UtcNow;

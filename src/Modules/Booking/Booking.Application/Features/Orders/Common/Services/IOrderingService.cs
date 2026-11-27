@@ -51,4 +51,16 @@ public interface IOrderingService
         OrderItem item,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Releases the reservations held by all items of an order that is being given up.
+    /// Dedicated seats are only modified in the change tracker; the caller must save changes.
+    /// General admission seats are returned to their sections immediately.
+    /// </summary>
+    /// <param name="order">The order with its items loaded.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <exception cref="InvalidOperationException">
+    /// A reservation is missing or inconsistent with the order items.
+    /// </exception>
+    Task ReleaseAllReservationsAsync(Order order, CancellationToken cancellationToken = default);
 }

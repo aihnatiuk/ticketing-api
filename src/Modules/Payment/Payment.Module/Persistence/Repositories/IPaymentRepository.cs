@@ -26,4 +26,12 @@ internal interface IPaymentRepository : IRepository<PaymentTransaction, long>
         long orderId,
         CancellationToken cancellationToken = default
     );
+
+    /// <summary>
+    /// Counts the failed payment attempts of the given order.
+    /// </summary>
+    /// <param name="orderId">Id of an order to count failed payments for.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Number of payments with the Failed status.</returns>
+    Task<int> CountFailedForOrderAsync(long orderId, CancellationToken cancellationToken = default);
 }

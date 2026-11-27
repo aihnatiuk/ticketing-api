@@ -27,6 +27,7 @@ public static class DependencyInjection
                 messaging
                     .Subscribe<EventPublishedIntegrationEvent>()
                     .Subscribe<PaymentSucceededIntegrationEvent>()
+                    .Subscribe<PaymentFailedIntegrationEvent>()
         );
 
         return services;

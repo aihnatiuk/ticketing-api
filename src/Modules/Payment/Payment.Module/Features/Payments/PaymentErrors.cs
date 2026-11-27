@@ -20,6 +20,12 @@ internal static class PaymentErrors
             $"Payment {paymentId} is {status} and cannot be completed."
         );
 
+    public static Error CannotFail(long paymentId, PaymentStatus status) =>
+        Error.Conflict(
+            "Payment.CannotFail",
+            $"Payment {paymentId} is {status} and cannot be failed."
+        );
+
     public static Error InvalidAmount(decimal amount) =>
         Error.Validation(
             "Payment.InvalidAmount",

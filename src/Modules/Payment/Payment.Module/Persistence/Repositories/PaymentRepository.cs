@@ -26,4 +26,13 @@ internal sealed class PaymentRepository(PaymentDbContext context)
             p => p.OrderId == orderId && p.Status == PaymentStatus.Completed,
             cancellationToken
         );
+
+    public Task<int> CountFailedForOrderAsync(
+        long orderId,
+        CancellationToken cancellationToken = default
+    ) =>
+        Entities.CountAsync(
+            p => p.OrderId == orderId && p.Status == PaymentStatus.Failed,
+            cancellationToken
+        );
 }

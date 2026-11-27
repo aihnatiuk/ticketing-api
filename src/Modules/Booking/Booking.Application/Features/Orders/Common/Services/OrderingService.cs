@@ -180,6 +180,67 @@ internal sealed class OrderingService(
         return Result.Success();
     }
 
+    public async Task ReleaseAllReservationsAsync(
+        Order order,
+        CancellationToken cancellationToken = default
+    )
+    {
+        long[] seatIds =
+        [
+            .. order
+                .OrderItems.Where(i => i.Type == OrderItemType.DedicatedSeat)
+                .Select(i => i.CatalogRefId),
+        ];
+
+        DedicatedSeat[] loaded = await seats.GetDedicatedSeatsAsync(
+            order.EventId,
+            seatIds,
+            cancellationToken
+        );
+
+        foreach (DedicatedSeat seat in loaded)
+        {
+            if (seat.Status != SeatStatus.Reserved || seat.OrderId != order.Id)
+            {
+                throw new InvalidOperationException(
+                    $"Dedicated seat '{seat.SeatId}' is not reserved by order '{order.Id}'."
+                );
+            }
+
+            seat.Release();
+        }
+
+        if (loaded.Length != seatIds.Length)
+        {
+            throw new InvalidOperationException(
+                $"Order '{order.Id}' references dedicated seats that were not found."
+            );
+        }
+
+        // Same per-section order as ReserveAsync, so concurrent updates cannot deadlock each other.
+        IEnumerable<(long SectionId, int Quantity)> releases = order
+            .OrderItems.Where(i => i.Type == OrderItemType.GeneralAdmission)
+            .GroupBy(i => i.CatalogRefId)
+            .Select(g => (SectionId: g.Key, Quantity: g.Sum(i => i.Quantity)))
+            .OrderBy(r => r.SectionId);
+
+        foreach ((long sectionId, int quantity) in releases)
+        {
+            bool released = await seats.TryReleaseGeneralAdmissionAsync(
+                order.EventId,
+                sectionId,
+                quantity,
+                cancellationToken
+            );
+            if (!released)
+            {
+                throw new InvalidOperationException(
+                    $"General admission section '{sectionId}' could not take back {quantity} seats of order '{order.Id}'."
+                );
+            }
+        }
+    }
+
     private async Task<Result<DedicatedSeat[]>> LoadRequestedDedicatedSeatsAsync(
         long eventId,
         IReadOnlyList<DedicatedSeatRequestDto> requested,
