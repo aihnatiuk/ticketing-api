@@ -1,3 +1,4 @@
+using BuildingBlocks.Infrastructure.Messaging.Outbox;
 using Catalog.Application.Abstractions;
 using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -30,5 +31,6 @@ internal sealed class CatalogDbContext(DbContextOptions<CatalogDbContext> option
     {
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
+        modelBuilder.ApplyOutboxConfiguration();
     }
 }

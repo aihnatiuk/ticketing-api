@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BuildingBlocks.Contracts\BuildingBlocks.Contracts.csproj" />
     <ProjectReference Include="..\BuildingBlocks.Domain\BuildingBlocks.Domain.csproj" />
   </ItemGroup>
 

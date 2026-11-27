@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Payment.Module.Domain;
+using Payment.Module.Domain.Enums;
 
 namespace Payment.Module.Persistence.Configurations;
 
@@ -28,5 +29,11 @@ internal sealed class PaymentTransactionConfiguration : IEntityTypeConfiguration
         builder.Property(p => p.Amount).HasPrecision(18, 2).IsRequired();
 
         builder.Property(p => p.CreatedAt).IsRequired();
+
+        // An order keeps its payment history, but only one payment can be pending at a time.
+        builder
+            .HasIndex(p => p.OrderId)
+            .IsUnique()
+            .HasFilter($"[Status] = {(short)PaymentStatus.Pending}");
     }
 }

@@ -1,5 +1,5 @@
 using BuildingBlocks.Application.Abstractions;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Application.Abstractions;
 using Catalog.Domain.Entities;
 using Catalog.Domain.Enums;
@@ -25,6 +25,11 @@ internal sealed class UpdateEventCommandHandler(
         if (@event.Status is EventStatus.Completed)
         {
             return EventErrors.CannotModifyCompleted(@event.Id);
+        }
+
+        if (@event.Status is not EventStatus.Created && @event.Currency != command.Currency)
+        {
+            return EventErrors.CannotChangeCurrency(@event.Id, @event.Status);
         }
 
         @event.Title = command.Title;

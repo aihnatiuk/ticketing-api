@@ -112,6 +112,10 @@ namespace Booking.Infrastructure.Persistence.Migrations
                     b.Property<long?>("PaymentId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
                     b.Property<short>("Status")
                         .HasColumnType("smallint");
 
@@ -167,6 +171,23 @@ namespace Booking.Infrastructure.Persistence.Migrations
 
                             t.HasCheckConstraint("CK_OrderItems_UnitPrice_NonNegative", "[UnitPrice] >= 0");
                         });
+                });
+
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Messaging.Outbox.InboxMessage", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Consumer")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTimeOffset>("ProcessedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("MessageId", "Consumer");
+
+                    b.ToTable("InboxMessages", "booking");
                 });
 
             modelBuilder.Entity("Booking.Domain.Entities.DedicatedSeat", b =>

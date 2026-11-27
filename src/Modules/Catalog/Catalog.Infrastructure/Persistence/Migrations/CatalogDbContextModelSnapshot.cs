@@ -23,6 +23,42 @@ namespace Catalog.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Messaging.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Error")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTimeOffset>("OccurredAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("ProcessedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OccurredAt")
+                        .HasDatabaseName("IX_OutboxMessages_Unprocessed")
+                        .HasFilter("[ProcessedAt] IS NULL");
+
+                    b.ToTable("OutboxMessages", "catalog");
+                });
+
             modelBuilder.Entity("Catalog.Domain.Entities.Event", b =>
                 {
                     b.Property<long>("Id")
@@ -49,6 +85,7 @@ namespace Catalog.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<short>("Status")
+                        .IsConcurrencyToken()
                         .HasColumnType("smallint");
 
                     b.Property<string>("Title")

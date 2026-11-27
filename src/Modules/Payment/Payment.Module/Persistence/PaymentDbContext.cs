@@ -1,3 +1,4 @@
+using BuildingBlocks.Infrastructure.Messaging.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Payment.Module.Domain;
 
@@ -14,5 +15,6 @@ internal sealed class PaymentDbContext(DbContextOptions<PaymentDbContext> option
     {
         modelBuilder.HasDefaultSchema(Schema);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PaymentDbContext).Assembly);
+        modelBuilder.ApplyOutboxConfiguration();
     }
 }

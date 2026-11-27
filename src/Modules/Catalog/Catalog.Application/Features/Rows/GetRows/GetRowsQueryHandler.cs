@@ -1,6 +1,6 @@
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Application.Pagination;
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Application.Abstractions;
 using Catalog.Application.Features.Rows.Common;
 using Catalog.Application.Features.Sections;

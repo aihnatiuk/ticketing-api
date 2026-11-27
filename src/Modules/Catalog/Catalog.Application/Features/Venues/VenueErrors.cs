@@ -1,4 +1,4 @@
-using BuildingBlocks.Application.Results;
+using BuildingBlocks.Domain.Results;
 using Catalog.Application.Features.Venues.Common.Layout;
 using Catalog.Domain.Entities;
 

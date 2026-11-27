@@ -1,10 +1,9 @@
-using BuildingBlocks.Application.Abstractions;
 using Catalog.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Application.Abstractions;
 
-public interface ICatalogDbContext : IUnitOfWork<CatalogModule>
+public interface ICatalogDbContext
 {
     DbSet<Venue> Venues { get; }
 
