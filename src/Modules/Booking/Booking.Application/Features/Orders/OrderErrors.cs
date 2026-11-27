@@ -13,6 +13,15 @@ public static class OrderErrors
     public static Error NotPending(long orderId) =>
         Error.Conflict("Order.NotPending", $"Order with id: '{orderId}' is not pending.");
 
+    public static Error NotPayable(long orderId) =>
+        Error.Conflict(
+            "Order.NotPayable",
+            $"Order with id: '{orderId}' is not in a state that allows payment."
+        );
+
+    public static Error EmptyOrder(long orderId) =>
+        Error.Validation("Order.Empty", $"Order with id: '{orderId}' has no items to pay for.");
+
     public static Error Expired(long orderId) =>
         Error.Conflict("Order.Expired", $"Order with id: '{orderId}' has expired.");
 

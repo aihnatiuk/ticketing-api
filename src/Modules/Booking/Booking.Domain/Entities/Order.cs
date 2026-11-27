@@ -128,6 +128,41 @@ public sealed class Order : Entity<long>
         return true;
     }
 
+    /// <summary>
+    /// Moves the order to payment processing and links it to the payment.
+    /// </summary>
+    /// <exception cref="DomainInvariantException">The order is not pending.</exception>
+    public void StartPayment(long paymentId)
+    {
+        if (Status != OrderStatus.Pending)
+        {
+            throw new DomainInvariantException(
+                $"Payment cannot be started for an order with status '{Status}'."
+            );
+        }
+
+        PaymentId = paymentId;
+        Status = OrderStatus.PaymentProcessing;
+        Revision++;
+    }
+
+    /// <summary>
+    /// Marks the order as paid.
+    /// </summary>
+    /// <exception cref="DomainInvariantException">The order is not awaiting payment.</exception>
+    public void MarkPaid()
+    {
+        if (Status != OrderStatus.PaymentProcessing)
+        {
+            throw new DomainInvariantException(
+                $"An order with status '{Status}' cannot be marked as paid."
+            );
+        }
+
+        Status = OrderStatus.Paid;
+        Revision++;
+    }
+
     public bool IsExpired() => ExpiresAt <= DateTimeOffset.UtcNow;
 
     private void OnOrderItemsChanged()

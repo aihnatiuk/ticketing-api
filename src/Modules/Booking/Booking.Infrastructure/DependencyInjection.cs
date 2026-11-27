@@ -9,6 +9,7 @@ using Catalog.Contracts.IntegrationEvents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Payment.Contracts.IntegrationEvents;
 
 namespace Booking.Infrastructure;
 
@@ -22,7 +23,10 @@ public static class DependencyInjection
         services.AddPersistence(configuration);
         services.AddMessaging<BookingModule, BookingDbContext>(
             configuration,
-            messaging => messaging.Subscribe<EventPublishedIntegrationEvent>()
+            messaging =>
+                messaging
+                    .Subscribe<EventPublishedIntegrationEvent>()
+                    .Subscribe<PaymentSucceededIntegrationEvent>()
         );
 
         return services;

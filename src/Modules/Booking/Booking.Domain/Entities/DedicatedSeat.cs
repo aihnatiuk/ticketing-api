@@ -1,5 +1,6 @@
 using Booking.Domain.Enums;
 using BuildingBlocks.Domain;
+using BuildingBlocks.Domain.Exceptions;
 
 namespace Booking.Domain.Entities;
 
@@ -23,5 +24,19 @@ public sealed class DedicatedSeat : Entity<long>
     {
         Status = SeatStatus.Available;
         OrderId = null;
+    }
+
+    /// <summary>
+    /// Marks a reserved seat as sold once the order it belongs to is paid.
+    /// </summary>
+    /// <exception cref="DomainInvariantException">The seat is not reserved.</exception>
+    public void Sell()
+    {
+        if (Status != SeatStatus.Reserved)
+        {
+            throw new DomainInvariantException($"Seat '{SeatId}' is {Status} and cannot be sold.");
+        }
+
+        Status = SeatStatus.Sold;
     }
 }

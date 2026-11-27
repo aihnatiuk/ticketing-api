@@ -2,6 +2,7 @@ using Booking.Application.Features.Orders.AddOrderItems;
 using Booking.Application.Features.Orders.Common;
 using Booking.Application.Features.Orders.CreateOrder;
 using Booking.Application.Features.Orders.GetOrder;
+using Booking.Application.Features.Orders.InitiatePayment;
 using Booking.Application.Features.Orders.RemoveOrderItem;
 using BuildingBlocks.Application.Abstractions;
 using BuildingBlocks.Domain.Results;
@@ -59,6 +60,23 @@ public class OrdersController : ControllerBase
     {
         RemoveOrderItemCommand command = new(orderId, itemId);
         Result<OrderDto> result = await handler.HandleAsync(command, cancellationToken);
+
+        return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
+    }
+
+    [HttpPost("{orderId:long}/payment")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<PaymentInitiatedDto>> InitiatePayment(
+        [FromRoute] long orderId,
+        [FromServices] ICommandHandler<InitiatePaymentCommand, PaymentInitiatedDto> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        InitiatePaymentCommand command = new(orderId);
+        Result<PaymentInitiatedDto> result = await handler.HandleAsync(command, cancellationToken);
 
         return result.IsSuccess ? result.Value : this.ToProblem(result.Error);
     }
